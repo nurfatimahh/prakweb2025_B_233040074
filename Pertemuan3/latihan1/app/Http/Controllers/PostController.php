@@ -1,0 +1,14 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use illuminate\Http\Request;
+use App\Models\Post;
+
+class PostController extends Controller {
+    public function index() {
+        $posts = Post::all();
+        return view('posts', compact('posts'));
+    }
+}
