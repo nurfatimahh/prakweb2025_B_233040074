@@ -12,9 +12,23 @@ class Category extends Model {
 
     protected $guarded = ['id'];
 
-    public function posts(): HasMany {
-        return $this->hasMany(Post::class, 'category_id');
+    public function posts(){
+        return $this->hasMany(Post::class);
 
+    }
+
+    public function category() {
+        return $this->hasMany(Category::class);
+    }
+
+    //Relasi BelongsTo untuk User
+    public function author() {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    //Tetep ada BG composibility
+    public function user() {
+        return $this->belongsTo(User::class);
     }
     
 }
