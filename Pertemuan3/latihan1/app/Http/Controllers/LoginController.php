@@ -10,22 +10,25 @@ class LoginController extends Controller {
         return view('login');
     }
     public function login(Request $request) {
-        // validasi input
+        // validasi input (email or username allowed)
         $request->validate([
-            'email' => 'required|email',
+            'email' => 'required|string',
             'password' => 'required',
         ]);
 
-        //logic login dengan Auth::attempt
-        if (Auth::attempt($request->only('email', 'password'))) {
+        $loginInput = $request->input('email');
+        $loginField = filter_var($loginInput, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        //logic login dengan Auth::attempt (supports email or username)
+        if (Auth::attempt([$loginField => $loginInput, 'password' => $request->input('password')], $request->boolean('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended('/posts');
+            return redirect()->intended(route('dashboard.index'));
         }
 
         //Login gagal
         return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ]);
+            'email' => 'Email/username atau password salah.',
+        ])->onlyInput('email');
     }   
         public function logout(Request $request) {
             Auth::logout();

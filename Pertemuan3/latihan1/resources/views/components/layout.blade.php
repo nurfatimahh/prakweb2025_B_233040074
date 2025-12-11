@@ -13,11 +13,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center space-x-4">
-                    <a href="/" class="text-gray-800 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                    <a href="/about" class="text-gray-800 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">About</a>
-                    <a href="/posts" class="text-gray-800 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Posts</a>
-                    <a href="/categories" class="text-gray-800 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Categories</a>
-                    <a href="/contact" class="text-gray-800 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                    <a href="/" class="text-gray-800 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Beranda</a>
+                    <a href="/about" class="text-gray-800 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Blog</a>
+                    <a href="/posts" class="text-gray-800 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Kategori</a>
+                    <a href="/categories" class="text-gray-800 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Tentang Kami</a>
                 </div>
 
                 <div class="flex items-center space-x-2">

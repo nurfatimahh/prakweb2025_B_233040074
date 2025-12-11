@@ -13,11 +13,10 @@
 </head>
 <body>
     <nav>
-        <a href="/">Home</a>
-        <a href="/about">About</a>
-        <a href="/posts">Posts</a>
-        <a href="/categories">Categories</a>
-        <a href="/contact">Contact</a>
+        <a href="/">Beranda</a>
+        <a href="/about">Blog</a>
+        <a href="/categories">Kategori</a>
+        <a href="/contact">Tentang Kami</a>
     </nav>
 
     {{ $slot }}
