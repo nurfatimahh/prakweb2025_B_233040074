@@ -5,41 +5,32 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    //Modul 2.2 START
-    public function showRegistrationForm() {
+    public function showRegistrationForm()
+    {
         return view('register');
     }
 
-    public function register(Request $request) {
-        // Validasi input: username + password (konfirmasi)
+    public function register(Request $request)
+    {
         $request->validate([
-            'username' => 'required|alpha_dash|min:3|max:255|unique:users,username',
-            'password' => 'required|string|min:8|confirmed',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6|confirmed',
         ]);
 
-        $username = $request->username;
-
-        // Generate fallback email using username to satisfy DB constraints
-        $email = $username . '@example.com';
-        $j = 1;
-        while (User::where('email', $email)->exists()) {
-            $email = $username . $j . '@example.com';
-            $j++;
-        }
-
-        // Create user (use username as name)
-        User::create([
-            'name' => $username,
-            'username' => $username,
-            'email' => $email,
+        $user = User::create([
+            'name' => $request->name,
+            'username' => $request->username,
+            'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
-        // Redirect ke login setelah register berhasil
-        return redirect()->route('login')->with('success', 'Registrasi berhasil!');
+        Auth::login($user);
+
+        return redirect()->route('dashboard.index');
     }
 }

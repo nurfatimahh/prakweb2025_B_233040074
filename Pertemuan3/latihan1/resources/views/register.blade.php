@@ -1,53 +1,100 @@
-<x-auth-layout>
-    <x-slot:title>Register</x-slot:title>
+@extends('layouts.auth')
 
-    <div class="min-h-screen flex items-center justify-center py-12">
-        <div class="w-full max-w-md bg-white rounded-xl shadow-md overflow-hidden p-8">
-            <h2 class="text-3xl font-extrabold text-center mb-6">Buat Akun</h2>
+@section('title', 'Register')
 
-            @if(session('success'))
-                <div class="p-3 bg-green-50 border border-green-100 text-green-700 rounded mb-4">{{ session('success') }}</div>
-            @endif
+@section('content')
+    <div class="w-full max-w-md bg-white rounded-xl shadow-md p-8">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Register</h2>
 
-            @if($errors->any())
-                <div class="mb-4">
-                    <ul class="list-disc list-inside text-sm text-red-600">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            <form method="POST" action="{{ route('register') }}" class="space-y-4">
-                @csrf
-
-
-                <div>
-                    <label class="block text-sm font-medium text-slate-700">Username</label>
-                    <input name="username" value="{{ old('username') }}" required autofocus class="mt-1 block w-full rounded-md border border-slate-200 px-3 py-2" />
-                    @error('username') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-slate-700">Password</label>
-                    <input name="password" type="password" required class="mt-1 block w-full rounded-md border border-slate-200 px-3 py-2" />
-                    @error('password') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-slate-700">Konfirmasi Password</label>
-                    <input name="password_confirmation" type="password" required class="mt-1 block w-full rounded-md border border-slate-200 px-3 py-2" />
-                </div>
-
-                <div>
-                    <button type="submit" class="w-full inline-flex justify-center items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-indigo-700">Daftar</button>
-                </div>
-            </form>
-
-            <div class="mt-4 text-sm text-center text-slate-600">
-                Sudah punya akun? <a href="{{ route('login') }}" class="text-indigo-600 hover:underline">Masuk</a>
+        <!-- Error Messages -->
+        @if ($errors->any())
+            <div class="mb-4 rounded-lg bg-red-100 p-3 text-sm text-red-700">
+                <ul class="list-disc list-inside">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
+        @endif
+
+        <!-- Registration Form -->
+        <form method="POST" action="{{ route('register') }}" class="space-y-4">
+            @csrf
+
+            <!-- Name -->
+            <div>
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Name"
+                    value="{{ old('name') }}"
+                    required
+                    class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-indigo-500 focus:ring focus:ring-indigo-200"
+                >
+            </div>
+
+            <!-- Username -->
+            <div>
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                    value="{{ old('username') }}"
+                    required
+                    class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-indigo-500 focus:ring focus:ring-indigo-200"
+                >
+            </div>
+
+            <!-- Email -->
+            <div>
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Email Address"
+                    value="{{ old('email') }}"
+                    required
+                    class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-indigo-500 focus:ring focus:ring-indigo-200"
+                >
+            </div>
+
+            <!-- Password -->
+            <div>
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    required
+                    class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-indigo-500 focus:ring focus:ring-indigo-200"
+                >
+            </div>
+
+            <!-- Password Confirmation -->
+            <div>
+                <input
+                    type="password"
+                    name="password_confirmation"
+                    placeholder="Confirm Password"
+                    required
+                    class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-indigo-500 focus:ring focus:ring-indigo-200"
+                >
+            </div>
+
+            <!-- Submit Button -->
+            <button
+                type="submit"
+                class="w-full rounded-lg bg-indigo-600 py-2 font-semibold text-white hover:bg-indigo-700 transition"
+            >
+                Register
+            </button>
+        </form>
+
+        <!-- Login Link -->
+        <div class="mt-6 text-center text-sm text-gray-600">
+            Already have an account?
+            <a href="{{ route('login') }}" class="font-semibold text-indigo-600 hover:underline">
+                Login
+            </a>
         </div>
     </div>
-</x-auth-layout>
+</div>
+@endsection

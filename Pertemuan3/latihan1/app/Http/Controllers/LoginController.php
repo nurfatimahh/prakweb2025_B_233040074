@@ -5,35 +5,44 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class LoginController extends Controller {
-    public function showLoginForm() {
+class LoginController extends Controller
+{
+    public function showLoginForm()
+    {
         return view('login');
     }
-    public function login(Request $request) {
-        // validasi input (email or username allowed)
+
+    public function login(Request $request)
+    {
         $request->validate([
             'email' => 'required|string',
             'password' => 'required',
         ]);
 
-        $loginInput = $request->input('email');
-        $loginField = filter_var($loginInput, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $loginInput = $request->email;
+        $field = filter_var($loginInput, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-        //logic login dengan Auth::attempt (supports email or username)
-        if (Auth::attempt([$loginField => $loginInput, 'password' => $request->input('password')], $request->boolean('remember'))) {
+        if (Auth::attempt([$field => $loginInput, 'password' => $request->password])) {
             $request->session()->regenerate();
-            return redirect()->intended(route('dashboard.index'));
+
+            if (Auth::user()->role === 'admin') {
+                return redirect('/admin');
+            }
+
+            return redirect('/dashboard');
         }
 
-        //Login gagal
         return back()->withErrors([
-            'email' => 'Email/username atau password salah.',
-        ])->onlyInput('email');
-    }   
-        public function logout(Request $request) {
-            Auth::logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-            return redirect('/');
+            'email' => 'Login gagal',
+        ]);
+    }
+
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
     }
 }

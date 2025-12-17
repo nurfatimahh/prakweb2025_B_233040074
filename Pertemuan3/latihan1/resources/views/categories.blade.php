@@ -1,5 +1,5 @@
 <x-layout>
     <x-slot:title>
-        Kategori
+    NUYYYYY
     </x-slot:title>
 </x-layout>

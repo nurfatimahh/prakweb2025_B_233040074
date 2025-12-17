@@ -1,32 +1,20 @@
-<x-layout>
-    <x-slot:title>{{ $category->name }}</x-slot:title>
+@extends('components.layout')
 
-    <section class="max-w-7xl mx-auto px-6 py-12">
-        <div class="mb-6">
-            <h1 class="text-3xl font-bold">{{ $category->name }}</h1>
-            <p class="text-slate-600 mt-2">Artikel & materi yang termasuk dalam kategori {{ $category->name }}.</p>
-        </div>
+@section('title', $category->name)
 
-        @if($posts->isEmpty())
-            <div class="p-6 bg-white rounded shadow">Belum ada posting untuk kategori ini.</div>
-        @else
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                @foreach($posts as $post)
-                    <article class="bg-white rounded-lg shadow overflow-hidden">
-                        <div class="p-4">
-                            <h2 class="text-lg font-semibold">{{ $post->title }}</h2>
-                            <p class="text-sm text-slate-600 mt-2">{{ \Illuminate\Support\Str::limit($post->excerpt ?? $post->body, 150) }}</p>
-                            <div class="mt-3">
-                                <a href="{{ route('posts.show', $post->slug) }}" class="text-indigo-600 hover:underline">Baca selengkapnya</a>
-                            </div>
-                        </div>
-                    </article>
-                @endforeach
-            </div>
+@section('content')
+<section class="max-w-4xl mx-auto py-20 px-6 text-center">
+    <h1 class="text-4xl font-bold text-blue-600 mb-4">
+        {{ $category->name }}
+    </h1>
 
-            <div class="mt-6">
-                {{ $posts->links() }}
-            </div>
-        @endif
-    </section>
-</x-layout>
+    <p class="text-gray-600 text-lg mb-10">
+        Ini adalah halaman khusus untuk {{ strtolower($category->name) }}.
+    </p>
+
+    <a href="{{ route('categories.index') }}"
+    class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+        ← Kembali ke Kategori
+    </a>
+</section>
+@endsection
